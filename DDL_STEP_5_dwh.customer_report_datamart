@@ -1,0 +1,29 @@
+DROP TABLE IF EXISTS dwh.customer_report_datamart;
+
+CREATE TABLE dwh.customer_report_datamart (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, -- идентификатор записи
+    customer_id BIGINT NOT NULL,                      -- идентификатор заказчика
+    customer_name VARCHAR NOT NULL,                   -- Ф. И. О. заказчика
+    customer_address VARCHAR NOT NULL,                -- адрес заказчика
+    customer_birthday DATE NOT NULL,                  -- дата рождения заказчика
+    customer_email VARCHAR NOT NULL,                  -- электронная почта заказчика
+    customer_money NUMERIC(15, 2) NOT NULL,           -- сумма, которую потратил заказчик
+    platform_money NUMERIC(15, 2) NOT NULL,           -- сумма, которую заработала платформа (10%)
+    count_order INTEGER NOT NULL,                     -- количество заказов за месяц
+    avg_price_order NUMERIC(15, 2) NOT NULL,          -- средняя стоимость заказа за месяц
+    median_time_order_completed NUMERIC(10, 1),       -- медианное время завершения заказа в днях
+    top_product_category VARCHAR NOT NULL,            -- самая популярная категория товаров
+    top_craftsman_id BIGINT NOT NULL,                 -- идентификатор самого популярного мастера
+    count_order_created INTEGER NOT NULL,             -- кол-во созданных заказов
+    count_order_in_progress INTEGER NOT NULL,         -- кол-во заказов в процессе изготовки
+    count_order_delivery INTEGER NOT NULL,            -- кол-во заказов в доставке
+    count_order_done INTEGER NOT NULL,                -- кол-во завершённых заказов
+    count_order_not_done INTEGER NOT NULL,            -- кол-во незавершённых заказов
+    report_period VARCHAR NOT NULL                    -- отчётный период (год-месяц)
+);
+
+-- Добавление комментариев к столбцам
+COMMENT ON TABLE dwh.customer_report_datamart IS 'Витрина отчетности по заказчикам (инкрементальная)';
+COMMENT ON COLUMN dwh.customer_report_datamart.customer_money IS 'Сумма покупок заказчика за отчетный период';
+COMMENT ON COLUMN dwh.customer_report_datamart.platform_money IS 'Доход платформы (10% от трат заказчика)';
+COMMENT ON COLUMN dwh.customer_report_datamart.median_time_order_completed IS 'Медианное время выполнения заказа в днях';

@@ -1,0 +1,5 @@
+DROP TABLE IF EXISTS dwh.load_dates_customer_report_datamart;
+
+CREATE TABLE dwh.load_dates_customer_report_datamart (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    load_dttm TIMESTAMP NOT NULL -- дата и время завершения загрузки
