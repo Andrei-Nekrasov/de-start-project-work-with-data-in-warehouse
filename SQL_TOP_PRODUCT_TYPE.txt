@@ -1,0 +1,14 @@
+SELECT 
+    customer_id, 
+    report_period, 
+    product_type AS top_product_category
+FROM (
+    SELECT 
+        customer_id, 
+        report_period, 
+        product_type,
+        ROW_NUMBER() OVER(PARTITION BY customer_id, report_period ORDER BY COUNT(product_id) DESC) as rnk
+    FROM dwh_delta
+    GROUP BY customer_id, report_period, product_type
+) t
+WHERE rnk = 1;
